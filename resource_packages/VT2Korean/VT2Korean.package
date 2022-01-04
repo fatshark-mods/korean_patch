@@ -1,0 +1,19 @@
+mod = [
+	"VT2Korean"
+]
+
+package = [
+	"resource_packages/VT2Korean/VT2Korean"
+]
+
+lua = [
+	"scripts/mods/VT2Korean/*"
+]
+
+slug = [
+	"fonts/mods/*"
+]
+
+texture = [
+	"textures/mods/*"
+]
