@@ -6,7 +6,7 @@ local korean_translation_table = dofile("scripts/mods/VT2Korean/korean_translati
 local korean_state = true
 
 local original_fonts = Fonts
--- .notdef font fixed
+-- Probably .notdef glyph fixed
 local custom_font_path = "fonts/mods/VT2Korean/KoPubWorld Batang_Pro Medium_subset"
 local custom_fonts = {
   arial = {custom_font_path, 14, "arial"},
@@ -30,28 +30,16 @@ local custom_fonts = {
   }
 }
 
--- Bless is not done yet
-local dlc_names = {
-  "woods", "woods_upgrade", "cog", "cog_upgrade", "grass", "holly", "lake", "lake_upgrade"
-}
-
--- Weave widget text size should be not reduced
-local scenegraph_id_blacklist = {
-  "forge_level_title", "panel_level_title_1", "panel_level_value_1", "panel_level_title_2",
-  "panel_level_value_2", "panel_level_title_3", "panel_level_value_3", "panel_power_title_1",
-  "panel_power_value_1", "panel_power_title_2", "panel_power_value_2", "panel_power_title_3",
-  "panel_power_value_3", "viewport_title_1", "viewport_title_2", "viewport_title_3",
-  "viewport_sub_title_1", "viewport_sub_title_2", "viewport_sub_title_3", "loadout_power_title",
-  "viewport_title", "viewport_sub_title", "panel_level_title", "panel_level_value",
-  "panel_power_title", "panel_power_value"
-}
-
--- I don't know why, but these isn't localized... maybe style.localize ?
--- {"title_text_victory", "title_text_defeat", "summary_title"} -- Return to keep
-
 --- From UIManager.reload_ingame_ui
 local function reload_sources()
   DeadlockStack.pause()
+
+  if Managers.ui then
+    Managers.ui:reload_ingame_ui(true)
+    collectgarbage()
+    DeadlockStack.unpause()
+    return
+  end
 
   for pkg in pairs(package.loaded) do
     if string.find(pkg, "^scripts/ui") then
@@ -64,6 +52,11 @@ local function reload_sources()
   collectgarbage()
   DeadlockStack.unpause()
 end
+
+-- Bless is not done yet
+local dlc_names = {
+  "woods", "woods_upgrade", "cog", "cog_upgrade", "grass", "holly", "lake", "lake_upgrade"
+}
 
 -- Korean store texture! Thanks AmYumi.
 local function load_custom_store_texture()
@@ -148,6 +141,20 @@ if script_data["eac-untrusted"] then
     return func(text_id)
   end)
 end
+
+-- I don't know why, but these isn't localized... maybe widget.style.localize ?
+-- {"title_text_victory", "title_text_defeat", "summary_title"} -- Return to keep
+
+-- Weave widget text size should be not reduced
+local scenegraph_id_blacklist = {
+  "forge_level_title", "panel_level_title_1", "panel_level_value_1", "panel_level_title_2",
+  "panel_level_value_2", "panel_level_title_3", "panel_level_value_3", "panel_power_title_1",
+  "panel_power_value_1", "panel_power_title_2", "panel_power_value_2", "panel_power_title_3",
+  "panel_power_value_3", "viewport_title_1", "viewport_title_2", "viewport_title_3",
+  "viewport_sub_title_1", "viewport_sub_title_2", "viewport_sub_title_3", "loadout_power_title",
+  "viewport_title", "viewport_sub_title", "panel_level_title", "panel_level_value",
+  "panel_power_title", "panel_power_value"
+}
 
 -- Some text is not localized so
 mod:hook(UIWidgets, "create_simple_text",
