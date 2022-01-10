@@ -72,7 +72,6 @@ end
 
 mod.on_unload = function()
   Fonts = original_fonts
-  VMFMod:dump(original_fonts, "original_fonts", 5)
 end
 
 mod.on_reload = function()
