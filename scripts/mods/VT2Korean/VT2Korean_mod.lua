@@ -13,12 +13,13 @@ local custom_font_path = "fonts/mods/VT2Korean/SourceHanSerifKR-Medium-subset"
 local function reload_ingame_ui()
   DeadlockStack.pause()
 
-  if Managers.ui then
-    Managers.ui:reload_ingame_ui(true)
-    collectgarbage()
-    DeadlockStack.unpause()
-    return
-  end
+  -- Instantly crashed, seems VMF problem
+  -- if Managers.ui then
+  --   Managers.ui:reload_ingame_ui(true)
+  --   collectgarbage()
+  --   DeadlockStack.unpause()
+  --   return
+  -- end
 
   for pkg in pairs(package.loaded) do
     if string.find(pkg, "^scripts/ui") then
