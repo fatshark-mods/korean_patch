@@ -1,6 +1,5 @@
 local mod = VT2KoreanMod
 
--- HUGE, Is this okay? We will see...
 local korean_translation_table = dofile("scripts/mods/VT2Korean/korean_translation_table")
 
 local korean_state = true
@@ -104,8 +103,8 @@ if script_data["eac-untrusted"] then
   end)
 end
 
--- Weave widget text size should be not reduced
-local scenegraph_id_blacklist = {
+-- Weave widget text size should not be reduced
+local weave_widget_blacklist = {
   "forge_level_title", "panel_level_title_1", "panel_level_value_1", "panel_level_title_2",
   "panel_level_value_2", "panel_level_title_3", "panel_level_value_3", "panel_power_title_1",
   "panel_power_value_1", "panel_power_title_2", "panel_power_value_2", "panel_power_title_3",
@@ -118,14 +117,17 @@ local scenegraph_id_blacklist = {
 -- Some text isn't localized, like scoreboard and Return to keep
 mod:hook(UIWidgets, "create_simple_text",
          function(func, text, scenegraph_id, size, color, text_style, optional_font_style, ...)
-  local reduce_font_size = 25
+  local font_size_offset = 25
 
-  if not table.contains(scenegraph_id_blacklist, scenegraph_id) then
+  if not table.contains(weave_widget_blacklist, scenegraph_id) then
     if scenegraph_id == "loadout_power_text" then
-      reduce_font_size = 8
+      font_size_offset = 8
     end
     if scenegraph_id == "essence_text" then
-      reduce_font_size = 5
+      font_size_offset = 5
+    end
+    if scenegraph_id == "text_area" then
+      font_size_offset = 35
     end
 
     local text_offset = (text_style and text_style.offset) or {0, 0, 2}
@@ -137,14 +139,14 @@ mod:hook(UIWidgets, "create_simple_text",
         localize = true,
         horizontal_alignment = "center",
         word_wrap = true,
-        font_size = size - reduce_font_size,
+        font_size = size - font_size_offset,
         font_type = optional_font_style or "hell_shark",
         text_color = text_color,
         offset = text_offset
       }
     else
       text_style.localize = true
-      text_style.font_size = text_style.font_size - reduce_font_size
+      text_style.font_size = text_style.font_size - font_size_offset
     end
   end
 
