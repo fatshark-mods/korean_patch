@@ -1,6 +1,6 @@
 local mod = VT2KoreanMod
 
-local korean_translation_table = dofile("scripts/mods/VT2Korean/korean_translation_table")
+local korean_translation_table = dofile("scripts/mods/VT2Korean/translation_table")
 
 local korean_state = true
 
@@ -101,9 +101,9 @@ local weave_widget_blacklist = {
   "panel_level_value_2", "panel_level_title_3", "panel_level_value_3", "panel_power_title_1",
   "panel_power_value_1", "panel_power_title_2", "panel_power_value_2", "panel_power_title_3",
   "panel_power_value_3", "viewport_title_1", "viewport_title_2", "viewport_title_3",
-  "viewport_sub_title_1", "viewport_sub_title_2", "viewport_sub_title_3",
-  "loadout_power_title", "viewport_title", "viewport_sub_title", "panel_level_title",
-  "panel_level_value", "panel_power_title", "panel_power_value"
+  "viewport_sub_title_1", "viewport_sub_title_2", "viewport_sub_title_3", "loadout_power_title",
+  "viewport_title", "viewport_sub_title", "panel_level_title", "panel_level_value",
+  "panel_power_title", "panel_power_value"
 }
 
 -- Some text isn't localized, like scoreboard and Return to keep
