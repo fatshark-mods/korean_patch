@@ -1,5 +1,3 @@
-local mod = VT2Korean
-
 -- If Korean Patch is approved, Korean chat mod will be useless
 local original_fonts = table.clone(Fonts)
 local custom_font_path = "fonts/mods/VT2Korean/SourceHanSerifKR-Medium-subset"
@@ -54,7 +52,7 @@ local function load_custom_store_texture()
   end
 end
 
-mod.on_init = function()
+local function on_init()
   load_custom_store_texture()
   table.insert(Managers.localizer._localizers, 1, Localizer("localization/mods/korean"))
   reload_ingame_ui()
@@ -63,12 +61,33 @@ mod.on_init = function()
   end
 end
 
-mod.on_unload = function()
+local function on_unload()
+  table.remove(Managers.localizer._localizers, 1)
   Fonts = original_fonts
 end
 
-mod.on_reload = function()
-  mod.on_unload()
+local function on_reload()
+  on_unload()
 end
 
-return
+local vt2_korean_object = {}
+
+vt2_korean_object.init = function()
+  on_init()
+end
+
+vt2_korean_object.update = function(dt)
+end
+
+vt2_korean_object.on_unload = function()
+  on_unload()
+end
+
+vt2_korean_object.on_reload = function()
+  on_reload()
+end
+
+vt2_korean_object.on_game_state_changed = function(status, state)
+end
+
+return vt2_korean_object
