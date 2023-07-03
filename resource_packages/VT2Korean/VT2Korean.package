@@ -17,3 +17,7 @@ slug = [
 texture = [
 	"textures/mods/*"
 ]
+
+strings = [
+	"localization/mods/*"
+]
